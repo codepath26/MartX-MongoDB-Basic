@@ -1,0 +1,1 @@
+User.hasMany(Product);
