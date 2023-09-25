@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 
 const adminRoutes = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 app.use(errorController.get404);
 mongoConnect(()=>{
