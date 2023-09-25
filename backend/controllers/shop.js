@@ -3,7 +3,7 @@ const Product = require('../models/product');
 
 exports.getProducts =async(req, res, next) => {
   try{  
-    let products = awaitProduct.findAll()
+    let products = await Product.fetchAll()
     res.status(201).json(products);
   }
   catch(err)
@@ -12,6 +12,7 @@ exports.getProducts =async(req, res, next) => {
 exports.getProduct = async(req, res, next) => {
   try{
     const prodId =req.params.productId;
+    console.log(prodId)
        let product =  await  Product.findByPk(prodId)
        res.status(201).json(product);
     
@@ -23,7 +24,7 @@ exports.getProduct = async(req, res, next) => {
 
 exports.getIndex = async(req, res, next) => {
   try{
-  let products = await Product.findAll()
+  let products = await Product.fetchAll()
    res.status(201).json(products)
   }catch(err){
     res.status(500).json({err : "internal sever erro"})

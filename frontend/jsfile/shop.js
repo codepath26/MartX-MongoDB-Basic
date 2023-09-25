@@ -16,8 +16,8 @@ items.forEach(product=> {
       <h5 class="card-title">${product.title}</h5>
       <p class="card-text">${product.description}</p>
       <p class="card-text">${product.price}</p>
-      <a href="../htmlFile/products.html?id=${product.id}" class="btn btn-sm btn-primary">View Details</a>
-          <a href="../htmlFile/cart.html?id=${product.id}"  class="btn btn-sm btn-outline-secondary">Add TO Cart</a>
+      <a href="../htmlFile/products.html?id=${product._id}" class="btn btn-sm btn-primary">View Details</a>
+          <a href="../htmlFile/cart.html?id=${product._id}"  class="btn btn-sm btn-outline-secondary">Add TO Cart</a>
           <input type="hidden" id="productId" name="productId" value = ${product.id}>
     </div>
   </div>

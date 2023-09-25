@@ -10,10 +10,9 @@ const mongoConnect = require("./util/database").mongoConnect;
 
 const app = express();
 app.use(cors());
-app.set('view engine', 'ejs');
-app.set('views', 'views');
+
 const adminRoutes = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
@@ -27,11 +26,11 @@ app.use((req, res, next) => {
 });
 
 app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 app.use(errorController.get404);
 mongoConnect(()=>{
-   app.listen(3000 , ()=>{
-    console.log("server running on port 3000")
+   app.listen(4000 , ()=>{
+    console.log("server running on port 4000")
    });
 })
