@@ -39,13 +39,17 @@ async function fetchdata (e){
     }
 
     // Add event listener to "Order Now" button
-  //   orderNowButton.addEventListener('click', placeOrder);
+    orderNowButton.addEventListener('click', placeOrder);
     
-  //  async function placeOrder() {
-  //     await axios.post('http://localhost:4000/create-order')
-  //      window.location.href ='../htmlFile/order.html';
-  //     cartList.innerHTML = '';
-  //   }
+   async function placeOrder() {
+    try{
+      await axios.post('http://localhost:4000/create-order')
+      window.location.href ='../htmlFile/order.html';
+      cartList.innerHTML = '';
+    }catch(err){
+      console.log(err);
+    }
+    }
 }
   
     

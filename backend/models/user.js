@@ -101,6 +101,41 @@ class User {
       console.log(err);
     }
   }
+  async addOrder(){
+    try{
+    const db = getDb();
+    const products = await this.getCart();
+
+      const order = {
+        items : products,
+        user : {
+          _id : new  ObjectId(this._id),
+          name : this.name,
+        }
+      };
+      const result = await db.collection('orders').insertOne(order)
+      console.log(result);
+      this.cart = {items : []}
+      console.log(this.cart);
+      const updateditem = await db.collection('users').updateOne({_id : new ObjectId(this._id)},{$set  : {
+        cart : {items : []}
+      }});
+      console.log(updateditem);
+      return result;
+    }catch(err){
+      console.log(err)
+    }
+  }
+  async getOders(){
+  try{
+
+    const db = getDb();
+    const orders =await db.collection('orders').find({'user._id' : new ObjectId(this._id)}).toArray();
+    return orders;
+  }catch(err){
+    console.log(err);
+  }
+  }
 }
 
 module.exports = User;
