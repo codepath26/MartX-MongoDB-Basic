@@ -2,12 +2,13 @@ const getDb = require('../util/database').getDb;
 const mongodb = require('mongodb')
 const ObjectId = mongodb.ObjectId;
 class Product {
-  constructor(title,price,description,imageUrl,id){
+  constructor(title,price,description,imageUrl,id,userId){
     this.title = title;
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
     this._id = id ?  new ObjectId(id) : null;
+    this.userId = userId;
   }
   async save (){
  const db = getDb();
@@ -38,6 +39,7 @@ class Product {
     .toArray()
     .then(products=>{
     console.log(products);
+    console.log('return product')
     return products;
     })
     .catch((err)=>{
@@ -45,20 +47,20 @@ class Product {
     })
   }
 
-static findByPk (productId){
-const db = getDb();
-return db
-.collection('products')
-// .findOne({_id : productId}) // this is not work bro and here is solution
-.find({_id : new mongodb.ObjectId(productId)})
-.next()
-.then(product =>{
-  console.log(product)
-  return product;
-})
-.catch((err)=>{
+static  async findByPk (productId){
+  try{
+
+    console.log("this is the findbyPk")
+    const db = getDb();
+     // .findOne({_id : productId}) // this is not work bro and here is solution
+    const product = await db.collection('products').find({_id : new mongodb.ObjectId(productId)}).next()
+    console.log(product);
+    return product;
+  }
+catch(err){
   console.log(err);
-})
+
+}
 }
 
 static deleteById(productId){

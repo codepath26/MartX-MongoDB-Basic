@@ -18,7 +18,7 @@ items.forEach(product=> {
       <p class="card-text">${product.price}</p>
       <a href="../htmlFile/products.html?id=${product._id}" class="btn btn-sm btn-primary">View Details</a>
           <a href="../htmlFile/cart.html?id=${product._id}"  class="btn btn-sm btn-outline-secondary">Add TO Cart</a>
-          <input type="hidden" id="productId" name="productId" value = ${product.id}>
+          <input type="hidden" id="productId" name="productId" value = ${product._id}>
     </div>
   </div>
 </div>`

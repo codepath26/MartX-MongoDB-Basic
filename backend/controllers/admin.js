@@ -1,7 +1,7 @@
 
 
 const Product = require('../models/product');
-const mongodb  = require('mongodb');
+
 
 
 
@@ -10,10 +10,10 @@ exports.postAddProduct = async (req, res, next) => {
   console.log(req.body)
   try {
     const { title, imageUrl, price, description } = req.body;
-
-   const product = new Product (title , price , description , imageUrl);
+  console.log("at herer bro")
+   const product =  new Product (title,price,description,imageUrl,null,req.user._id);
    console.log(product)
-   product.save();
+   await product.save();
     res.status(201).json({message : "itemadded successfully"})
   } catch (err) {
 
@@ -56,8 +56,9 @@ exports.postEditProduct = async (req, res, next) => {
 
 exports.getProducts = async (req, res, next) => {
   try {
+    console.log("herer2")
     let products = await Product.fetchAll();
-    res.status(201).json(products);
+    res.status(201).json(products); // this is line no 61
   } catch (err) {
     console.log(err);
     res.status(500).json({ err: 'internal server error' });
