@@ -33,10 +33,9 @@ exports.getIndex = async(req, res, next) => {
 
 exports.getCart = async (req, res, next) => {
   try{
-    let cart = await req.user.getCart();
-    // console.log(cart)
-    let products = await cart.getProducts();
-
+    console.log("at get cart method")
+    let products = await req.user.getCart();
+    console.log("END get cart method")
     res.status(201).json(products);
   }catch(err){
     res.status(500).json({err : "internal sever erro"})
@@ -53,8 +52,8 @@ exports.postCart = async (req, res, next) => {
    const product = await Product.findByPk(prodId);
    console.log("product ===>",product)
    console.log("this user",req.user)
-const result =await  req.user.addToCart(product);
-console.log(result)
+ const result =await  req.user.addToCart(product);
+  console.log("result",result)
 
 
 
@@ -78,7 +77,7 @@ console.log(result)
   //   await cart.addProduct(product, {
   //     through: { quantity: newQuantity }
   //   });
-  //   res.status(200).json({message : "done with cart"})
+    res.status(200).json({message : "done with cart"})
    
   } catch(err){
     res.status(500).json({err : "internal sever erro"})
