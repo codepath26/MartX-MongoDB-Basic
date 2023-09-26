@@ -54,29 +54,6 @@ exports.postCart = async (req, res, next) => {
    console.log("this user",req.user)
  const result =await  req.user.addToCart(product);
   console.log("result",result)
-
-
-
-  //   let newQuantity = 1;
-
-  //   const cart = await req.user.getCart();
-  //   const products = await cart.getProducts({ where: { id: prodId } });
-
-  //   let product;
-  //   if (products.length > 0) {
-  //     product = products[0];
-  //   }
-
-  //   if (product) {
-  //     const oldQuantity = product.cartItem.quantity;
-  //     newQuantity = oldQuantity + 1;
-  //   } else {
-  //     product = await Product.findByPk(prodId);
-  //   }
-
-  //   await cart.addProduct(product, {
-  //     through: { quantity: newQuantity }
-  //   });
     res.status(200).json({message : "done with cart"})
    
   } catch(err){
@@ -88,11 +65,8 @@ exports.postCartDeleteProduct =async (req, res, next) => {
   try{
       console.log(req.body.productId)
     const prodId = req.body.productId;
-    let cart = await req.user.getCart()
-    let products = await cart.getProducts({ where: { id: prodId } });
-        const product = products[0];
-        let result = await product.cartItem.destroy();
-        res.redirect("/cart");
+     const result = await req.user.deleteItemFromcart(prodId)
+     res.status(201).json("Item Deleted successfully")
       }
   catch(err){
     res.status(500).json({err : "internal sever erro"})
