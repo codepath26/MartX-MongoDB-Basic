@@ -81,11 +81,22 @@ class User {
              })
             }
         })
-        // console.log("this is the product");
-        // console.log(products)
-        // console.log("And");
-        // console.log(newproducts);
         return newproducts;
+    }catch(err){
+      console.log(err);
+    }
+  }
+  async deleteItemFromcart (productId){
+    try{
+      const updatedCartItems = this.cart.items.filter(item =>{
+        return item.productId.toString() !== productId.toString();
+      });
+      const db = getDb();
+      const updateditem = await db.collection('users').updateOne({_id : new ObjectId(this._id)},{$set  : {
+        cart : {items : updatedCartItems}
+      }});
+      console.log(updateditem);
+      return updateditem;
     }catch(err){
       console.log(err);
     }
