@@ -64,6 +64,32 @@ class User {
     console.log(err);
   }
   }
+
+  async getCart(){
+    // return this.cart;
+    try{
+
+      const db =getDb();
+      const productIds =await this.cart.items.map((i)=>{
+        return i.productId;
+      })
+      const products = await db.collection("products").find({_id : {$in :productIds}}).toArray();
+       const newproducts =  products.map(data=>{
+          return {...data ,
+             quantity : this.cart.items.find(i =>{
+              return i.productId.toString() === data._id.toString();
+             })
+            }
+        })
+        // console.log("this is the product");
+        // console.log(products)
+        // console.log("And");
+        // console.log(newproducts);
+        return newproducts;
+    }catch(err){
+      console.log(err);
+    }
+  }
 }
 
 module.exports = User;
