@@ -4,13 +4,17 @@ document.addEventListener('DOMContentLoaded',fetchdata)
 
 
 async function fetchdata (e){
+  console.log("here");
 const products = await axios.get('http://localhost:4000/admin/products')
+console.log("product gotten")
 const items = products.data;
 items.forEach(product=> {
   item.innerHTML += `
   <div class="col-md-4 mb-4">
     <div class="card">
-      <img src="${product.imageUrl}" class="card-img-top"  height="300px" width="300px" alt="Product Image">
+
+      <img src="${product.imageUrl}" class="card-img-top img"  height="300px" width="200px" alt="Product Image">
+    
       <div class="card-body">
         <h5 class="card-title">${product.title}</h5>
         <p class="card-text">${product.description}</p>
