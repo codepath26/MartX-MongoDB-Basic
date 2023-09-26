@@ -78,22 +78,9 @@ exports.postCartDeleteProduct =async (req, res, next) => {
 
 exports.postOrder = async (req, res, next) => {
   try {
-    let fetchedCart;
-
-    const cart = await req.user.getCart();
-    fetchedCart = cart;
-    
-    const products = await cart.getProducts();
-    
-    const order = await req.user.createOrder();
-    const orderProducts = products.map(product => {
-    
-        product.orderItem = { quantity: product.cartItem.quantity };
-        return product;
-    });
-    
-    await order.addProducts(orderProducts);
-    await fetchedCart.setProducts(null);
+    console.log("at post order")
+    const result = await req.user.addOrder()
+    console.log(result);
   res.status(200).json({message : "productremove success"})
   } catch (error) {
     res.status(500).json({err : "internal sever erro"})
@@ -102,11 +89,13 @@ exports.postOrder = async (req, res, next) => {
 };
 
 
-exports.getOrders = async (req, res, next) => {
+exports.getOrderslist = async (req, res, next) => {
   try {
 
-let orders = await req.user.getOrders({include: ['products']})
-res.status(201).json(orders);
+    const orders = await req.user.getOders();
+    // console.log('this isthe filnal order')
+    // console.log(typeof orders);
+   res.status(201).json(orders);
   }catch(err){
     res.status(500).json({err : "internal sever erro"})
   }
